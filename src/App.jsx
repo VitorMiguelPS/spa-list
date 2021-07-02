@@ -1,13 +1,18 @@
-import './App.css';
-import { Grid } from '@material-ui/core';
+import "./App.css";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
 
-import Routes from "./routes/routes"
+import theme from "./styles/theme";
+
+import Routes from "./routes/routes";
 
 function App() {
   return (
-    <Grid className="App">
-      <Routes />
-    </Grid>
+    <ThemeProvider theme={theme}>
+      <Grid className="App">
+        <Routes />
+      </Grid>
+    </ThemeProvider>
   );
 }
 

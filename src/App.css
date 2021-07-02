@@ -1,3 +1,30 @@
+@font-face {
+  font-family: "Geomanist";
+  font-weight: normal;
+  font-style: normal;
+  src: url("./assets/fonts/Geomanist-Regular.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Geomanist-Bold";
+  font-weight: normal;
+  font-style: normal;
+  src: url("./assets/fonts/Geomanist-Bold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Geomanist-Light";
+  font-style: normal;
+  src: url("./assets/fonts/Geomanist-Light.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Geomanist-Medium";
+  font-weight: normal;
+  font-style: normal;
+  src: url("./assets/fonts/Geomanist-Medium.otf") format("truetype");
+}
+
 .App {
   text-align: center;
 }
