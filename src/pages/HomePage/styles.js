@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   HomeContent: {
     paddingLeft: "2.75rem",
     paddingRight: "1.75rem",
-    paddingTop: "5rem",
   },
   TextSection: {
     display: "flex",
@@ -33,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
   ImageSection: {
     width: "60%",
+    "& img": {
+      width: "80%",
+    },
   },
   ButtonLogin: {
     alignSelf: "center",

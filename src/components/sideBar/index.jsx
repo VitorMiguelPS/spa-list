@@ -30,6 +30,14 @@ function SideBar() {
             Github
           </Button>
 
+          <Button
+            href="https://www.linkedin.com/in/vitor-mp-silva/"
+            target="_blank"
+            color="inherit"
+          >
+            LinkedIn
+          </Button>
+
           <Button component={Link} to="/login" color="inherit">
             Login
           </Button>
