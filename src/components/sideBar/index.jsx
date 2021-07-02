@@ -1,11 +1,16 @@
+import React, { useContext } from "react";
 import { AppBar, Toolbar, Typography, Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Assessment } from "@material-ui/icons";
+
+import { ContextCommon } from "../../contexts/common";
 
 import { useStyles } from "./styles";
 
 function SideBar() {
   const classes = useStyles();
+
+  const { loged, setLoged } = useContext(ContextCommon);
 
   return (
     <AppBar
@@ -38,12 +43,27 @@ function SideBar() {
             LinkedIn
           </Button>
 
-          <Button component={Link} to="/login" color="inherit">
-            Login
-          </Button>
-          <Button component={Link} to="/login" color="inherit">
-            Logout
-          </Button>
+          {!loged && (
+            <Button
+              variant="contained"
+              component={Link}
+              to="/login"
+              color="inherit"
+              className={classes.loginButton}
+            >
+              Login
+            </Button>
+          )}
+          {loged && (
+            <Button
+              component={Link}
+              to="/"
+              color="inherit"
+              onClick={() => setLoged(false)}
+            >
+              Logout
+            </Button>
+          )}
         </Grid>
       </Toolbar>
     </AppBar>

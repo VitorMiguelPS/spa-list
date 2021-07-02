@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     textAlign: "left",
     width: "40%",
+    flexDirection: "column",
     "& h1": {
       fontSize: "4rem",
       fontWeight: 700,

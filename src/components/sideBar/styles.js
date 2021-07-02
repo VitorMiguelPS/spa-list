@@ -27,4 +27,8 @@ export const useStyles = makeStyles((theme) => ({
     color: theme.appColors.whiteColor,
     fontWeight: 700,
   },
+  loginButton: {
+    borderRadius: 20,
+    color: "#000 !important",
+  },
 }));

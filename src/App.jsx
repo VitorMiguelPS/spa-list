@@ -5,13 +5,16 @@ import { Grid } from "@material-ui/core";
 import theme from "./styles/theme";
 
 import Routes from "./routes/routes";
+import { ProviderCommon } from "./contexts/common";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Grid className="App">
-        <Routes />
-      </Grid>
+      <ProviderCommon>
+        <Grid className="App">
+          <Routes />
+        </Grid>
+      </ProviderCommon>
     </ThemeProvider>
   );
 }

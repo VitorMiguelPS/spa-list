@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
+import { ContextCommon } from "../../contexts/common";
 import useStyles from "./styles";
 import HomeImage from "../../assets/images/registrator.png";
 import SideBar from "../../components/sideBar";
 
 function HomePage() {
   const classes = useStyles();
+
+  const { loged } = useContext(ContextCommon);
+
+  const verifyLogedStatus = loged ? "/listagem" : "/login";
 
   return (
     <Grid item className={classes.root}>
@@ -20,7 +25,7 @@ function HomePage() {
         alignItems="center"
         className={classes.HomeContent}
       >
-        <Grid item direction="column" className={classes.TextSection}>
+        <Grid item className={classes.TextSection}>
           <Typography variant="h6">
             Need help to manage your clients?
           </Typography>
@@ -30,7 +35,7 @@ function HomePage() {
             is better that keep the power in your hands
           </Typography>
           <Button variant="contained" className={classes.ButtonLogin}>
-            <Link to="/login">Start</Link>
+            <Link to={verifyLogedStatus}>Start</Link>
           </Button>
         </Grid>
 
