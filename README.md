@@ -1,7 +1,5 @@
 # SPA List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Third Parts Used Libs
 
 In this project, I'm using these following libs:
