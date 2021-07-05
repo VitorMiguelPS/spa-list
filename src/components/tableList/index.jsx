@@ -72,7 +72,7 @@ function TableList(listType) {
 
     const masksToValid = [
       {
-        telephone: [
+        phoneNumber: [
           "(",
           /[1-9]/,
           /\d/,
@@ -110,7 +110,6 @@ function TableList(listType) {
           /\d/,
         ],
         zip: [/[0-9]/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/],
-        numberAddress: [/^[0-9\b]*$/],
       },
     ];
 
@@ -194,7 +193,7 @@ function TableList(listType) {
               <TableRow>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Second Name</TableCell>
-                <TableCell align="center">Telephone</TableCell>
+                <TableCell align="center">Phone Number</TableCell>
                 <TableCell align="center">E-mail</TableCell>
                 <TableCell align="center">Password</TableCell>
                 <TableCell align="center">&nbsp;</TableCell>
@@ -209,7 +208,7 @@ function TableList(listType) {
                 >
                   <TableCell align="center">{item.name}</TableCell>
                   <TableCell align="center">{item.secondName}</TableCell>
-                  <TableCell align="center">{item.telephone}</TableCell>
+                  <TableCell align="center">{item.phoneNumber}</TableCell>
                   <TableCell align="center">{item.email}</TableCell>
                   <TableCell align="center">{item.password}</TableCell>
                   <TableCell align="center">
@@ -379,9 +378,9 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    id="telephone"
-                    label="Telephone"
-                    name="telephone"
+                    id="phoneNumber"
+                    label="Phone Number"
+                    name="phoneNumber"
                     InputProps={{
                       inputComponent: TextMaskCustom,
                     }}

@@ -27,4 +27,9 @@ export const useStyles = makeStyles((theme) => ({
   tableSession: {
     margin: "0 50px",
   },
+  breadcrumb: {
+    display: "flex",
+    justifyContent: "flex-start",
+    marginTop: 10,
+  },
 }));

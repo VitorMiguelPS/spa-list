@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Grid, Typography, Paper, Button } from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { useHistory } from "react-router-dom";
 
+import { ContextCommon } from "../../contexts/common";
 import { useStyles } from "./styles";
 import SideBar from "../../components/sideBar";
 import TableList from "../../components/tableList";
@@ -10,8 +13,22 @@ import UserImage from "../../assets/images/user.png";
 
 function ListPage() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const { loged } = useContext(ContextCommon);
 
   const [listView, setListView] = useState("");
+
+  useEffect(() => {
+    const checkLogedStatus = () => {
+      if (!loged) {
+        history.push("/login");
+      }
+    };
+
+    checkLogedStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Grid item>
@@ -36,7 +53,7 @@ function ListPage() {
                 variant="contained"
                 color="secondary"
                 className={classes.submit}
-                onClick={(e) => setListView("client")}
+                onClick={() => setListView("client")}
               >
                 View
               </Button>
@@ -48,7 +65,7 @@ function ListPage() {
                 variant="contained"
                 color="secondary"
                 className={classes.submit}
-                onClick={(e) => setListView("user")}
+                onClick={() => setListView("user")}
               >
                 View
               </Button>
@@ -57,6 +74,12 @@ function ListPage() {
         </>
       ) : (
         <Grid className={classes.tableSession}>
+          <Grid item className={classes.breadcrumb}>
+            <Button onClick={() => setListView("")}>
+              <ArrowBackIcon /> Back
+            </Button>
+          </Grid>
+
           <TableList list={listView} />
         </Grid>
       )}

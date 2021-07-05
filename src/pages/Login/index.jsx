@@ -8,7 +8,6 @@ import useStyles from "./styles";
 
 function Login() {
   const classes = useStyles();
-
   const history = useHistory();
 
   const { setLoged } = useContext(ContextCommon);
