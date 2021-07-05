@@ -17,7 +17,7 @@ function ListPage() {
     <Grid item>
       <SideBar actPage={"listagem"} />
 
-      {!listView && (
+      {!listView ? (
         <>
           <Grid item className={classes.titleSession}>
             <Typography variant="h1" className={classes.pageTitle}>
@@ -55,9 +55,7 @@ function ListPage() {
             </Paper>
           </Grid>
         </>
-      )}
-
-      {listView && (
+      ) : (
         <Grid className={classes.tableSession}>
           <TableList list={listView} />
         </Grid>

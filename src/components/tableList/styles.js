@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     width: "100%",
     alignItems: "center",
-    marginBottom: 30,
+    margin: "30px 0",
   },
   titlePage: {
     textTransform: "capitalize",
@@ -40,5 +40,11 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     margin: "0 15px",
+  },
+  headerTable: {
+    background: "#ffeabe",
+  },
+  odd: {
+    background: "#fffbf4",
   },
 }));

@@ -16,6 +16,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import CreateIcon from "@material-ui/icons/Create";
+import MaskedInput from "react-text-mask";
 
 import { ContextCommon } from "../../contexts/common";
 import { useStyles } from "./styles";
@@ -52,13 +53,79 @@ function TableList(listType) {
 
     for (const item in objInputs) {
       if (objInputs[item]?.localName === "input") {
-        const itemId = objInputs[item].id;
-        newClientToSubmit[`${itemId}`] = objInputs[item].value;
+        if (objInputs[item].value === "") {
+          alert("Please, review the form. All fields are required.");
+
+          return false;
+        } else {
+          const itemId = objInputs[item].name;
+          newClientToSubmit[`${itemId}`] = objInputs[item].value;
+        }
       }
     }
 
     addListItem(newClientToSubmit);
   };
+
+  function TextMaskCustom(props) {
+    const { id, inputRef, ...other } = props;
+
+    const masksToValid = [
+      {
+        telephone: [
+          "(",
+          /[1-9]/,
+          /\d/,
+          ")",
+          " ",
+          /\d/,
+          /\d/,
+          /\d/,
+          /\d/,
+          /\d/,
+          "-",
+          /\d/,
+          /\d/,
+          /\d/,
+          /\d/,
+        ],
+        cnpj: [
+          /[0-9]/,
+          /\d/,
+          ".",
+          /\d/,
+          /\d/,
+          /\d/,
+          ".",
+          /\d/,
+          /\d/,
+          /\d/,
+          "/",
+          /\d/,
+          /\d/,
+          /\d/,
+          /\d/,
+          "-",
+          /\d/,
+          /\d/,
+        ],
+        zip: [/[0-9]/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/],
+        numberAddress: [/^[0-9\b]*$/],
+      },
+    ];
+
+    return (
+      <MaskedInput
+        {...other}
+        ref={(ref) => {
+          inputRef(ref ? ref.inputElement : null);
+        }}
+        mask={masksToValid[0][id]}
+        placeholderChar={"\u2000"}
+        showMask
+      />
+    );
+  }
 
   return (
     <Grid container>
@@ -76,9 +143,9 @@ function TableList(listType) {
       </Grid>
 
       <TableContainer component={Paper}>
-        {listType.list === "client" && (
+        {listType.list === "client" ? (
           <Table className={classes.table} aria-label="simple table">
-            <TableHead>
+            <TableHead className={classes.headerTable}>
               <TableRow>
                 <TableCell align="center">CNPJ</TableCell>
                 <TableCell align="center">Fantasy Name</TableCell>
@@ -94,37 +161,36 @@ function TableList(listType) {
               </TableRow>
             </TableHead>
 
-            {clientList.length > 0 && (
-              <TableBody>
-                {clientList?.map((item, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row">
-                      {item.cnpj}
-                    </TableCell>
-                    <TableCell align="center">{item.fantasyName}</TableCell>
-                    <TableCell align="center">{item.socialReason}</TableCell>
-                    <TableCell align="center">{item.zip}</TableCell>
-                    <TableCell align="center">{item.address}</TableCell>
-                    <TableCell align="center">{item.numberAddress}</TableCell>
-                    <TableCell align="center">{item.complement}</TableCell>
-                    <TableCell align="center">{item.district}</TableCell>
-                    <TableCell align="center">{item.city}</TableCell>
-                    <TableCell align="center">{item.state}</TableCell>
-                    <TableCell align="center">
-                      <Button>
-                        <CreateIcon></CreateIcon>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            )}
+            <TableBody>
+              {clientList?.map((item, index) => (
+                <TableRow
+                  key={index}
+                  className={index % 2 === 0 ? "" : classes.odd}
+                >
+                  <TableCell component="th" scope="row">
+                    {item.cnpj}
+                  </TableCell>
+                  <TableCell align="center">{item.fantasyName}</TableCell>
+                  <TableCell align="center">{item.socialReason}</TableCell>
+                  <TableCell align="center">{item.zip}</TableCell>
+                  <TableCell align="center">{item.address}</TableCell>
+                  <TableCell align="center">{item.numberAddress}</TableCell>
+                  <TableCell align="center">{item.complement}</TableCell>
+                  <TableCell align="center">{item.district}</TableCell>
+                  <TableCell align="center">{item.city}</TableCell>
+                  <TableCell align="center">{item.state}</TableCell>
+                  <TableCell align="center">
+                    <Button>
+                      <CreateIcon></CreateIcon>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
-        )}
-
-        {listType.list === "user" && (
+        ) : (
           <Table className={classes.table} aria-label="simple table">
-            <TableHead>
+            <TableHead className={classes.headerTable}>
               <TableRow>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">Second Name</TableCell>
@@ -134,9 +200,13 @@ function TableList(listType) {
                 <TableCell align="center">&nbsp;</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
               {userList.map((item, index) => (
-                <TableRow key={index}>
+                <TableRow
+                  key={index}
+                  className={index % 2 === 0 ? "" : classes.odd}
+                >
                   <TableCell align="center">{item.name}</TableCell>
                   <TableCell align="center">{item.secondName}</TableCell>
                   <TableCell align="center">{item.telephone}</TableCell>
@@ -154,7 +224,7 @@ function TableList(listType) {
         )}
       </TableContainer>
 
-      {listType.list === "client" && (
+      {listType.list === "client" ? (
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -179,42 +249,41 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
+                    id="fantasyName"
+                    label="Fantasy Name"
+                    name="fantasyName"
+                  />
+                  <TextField
+                    margin="normal"
+                    required
                     id="cnpj"
                     label="CNPJ"
                     name="cnpj"
+                    InputProps={{
+                      inputComponent: TextMaskCustom,
+                    }}
                   />
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
-                    id="fantasyName"
-                    label="Fantasy Name"
-                    name="cnfantasyNamepj"
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    id="socialReason"
-                    label="Social Reason"
-                    name="socialReason"
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    id="zip"
-                    label="Zip"
-                    name="zip"
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    variant="outlined"
                     id="address"
                     label="Address"
                     name="address"
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    id="numberAddress"
+                    label="N°"
+                    name="numberAddress"
+                    type="number"
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    id="state"
+                    label="State"
+                    name="state"
                   />
                 </Grid>
 
@@ -222,15 +291,23 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
-                    id="numberAddress"
-                    label="N°"
-                    name="numberAddress"
+                    id="socialReason"
+                    label="Social Reason"
+                    name="socialReason"
                   />
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
+                    id="zip"
+                    label="Zip"
+                    name="zip"
+                    InputProps={{
+                      inputComponent: TextMaskCustom,
+                    }}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
                     id="complement"
                     label="Complement"
                     name="complement"
@@ -238,7 +315,6 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="district"
                     label="District"
                     name="district"
@@ -246,18 +322,9 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="city"
                     label="City"
                     name="city"
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    variant="outlined"
-                    id="state"
-                    label="State"
-                    name="state"
                   />
                 </Grid>
               </Grid>
@@ -273,9 +340,7 @@ function TableList(listType) {
             </form>
           </Fade>
         </Modal>
-      )}
-
-      {listType.list === "user" && (
+      ) : (
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -300,7 +365,6 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="name"
                     label="Name"
                     name="name"
@@ -308,7 +372,6 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="secondName"
                     label="Second Name"
                     name="secondName"
@@ -316,10 +379,12 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="telephone"
                     label="Telephone"
                     name="telephone"
+                    InputProps={{
+                      inputComponent: TextMaskCustom,
+                    }}
                   />
                 </Grid>
 
@@ -327,7 +392,6 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="email"
                     label="E-mail"
                     name="email"
@@ -335,7 +399,6 @@ function TableList(listType) {
                   <TextField
                     margin="normal"
                     required
-                    variant="outlined"
                     id="password"
                     label="Password"
                     name="password"
