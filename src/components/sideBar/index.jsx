@@ -7,7 +7,7 @@ import { ContextCommon } from "../../contexts/common";
 
 import { useStyles } from "./styles";
 
-function SideBar() {
+function SideBar(props) {
   const classes = useStyles();
 
   const { loged, setLoged } = useContext(ContextCommon);
@@ -15,7 +15,7 @@ function SideBar() {
   return (
     <AppBar
       position="static"
-      color="transparent"
+      color={props.actPage ? "primary" : "transparent"}
       className={classes.HeaderMenu}
     >
       <Toolbar className={classes.toolbar}>

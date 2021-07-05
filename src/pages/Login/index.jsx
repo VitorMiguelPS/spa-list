@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Grid, Paper, TextField, Button, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { ContextCommon } from "../../contexts/common";
 
@@ -9,7 +9,9 @@ import useStyles from "./styles";
 function Login() {
   const classes = useStyles();
 
-  const { loged, setLoged } = useContext(ContextCommon);
+  const history = useHistory();
+
+  const { setLoged } = useContext(ContextCommon);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,14 +21,10 @@ function Login() {
     password: "123qwe",
   };
 
-  useEffect(() => {
-    console.log(loged);
-  }, [loged]);
-
   function checkLoginCredentials() {
     if (email === preUser.user && password === preUser.password) {
       setLoged(true);
-      // window.location.href = "/listagem";
+      history.push("/listagem");
     } else {
       alert(
         "Something gone wrong with your credentials. Please review your E-mail and Password"
